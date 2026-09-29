@@ -78,16 +78,6 @@ pub const SLASH_LOCK_LEDGERS: u32 = 17_280;
 #[cfg(test)]
 pub const SLASH_LOCK_LEDGERS: u32 = 10;
 
-/// Default treasury share of a slash, in basis points (10_000 = 100%).
-///
-/// The remainder goes to the staker reward pool. The default is 100% so that
-/// an upgraded deployment with no explicit configuration behaves exactly as
-/// before this feature existed: every slashed token lands in the treasury.
-pub const DEFAULT_TREASURY_SHARE_BPS: u32 = 10_000;
-
-/// Denominator for the treasury/staker split, in basis points.
-pub const BPS_DENOMINATOR: u32 = 10_000;
-
 // ─── Errors ────────────────────────────────────────────────────────────────
 
 /// Errors returned by the Lumina Registry contract operations.
@@ -190,13 +180,10 @@ pub enum RegistryError {
     InvalidAttestation = 27,
     /// The caller has no attestation to revoke on this registration.
     AttestationNotFound = 28,
-    /// The treasury share is greater than 10_000 basis points.
-    InvalidSplit = 29,
-    /// The caller has no claimable staker reward for this registration.
-    NothingToClaim = 30,
-    /// A staker reward claim was attempted for a registration that has no
-    /// reward pool entry.
-    NoRewardPool = 31,
+    /// The configured treasury split is greater than 100%.
+    InvalidSplit        = 29,
+    /// The caller has no claimable staker reward to withdraw.
+    NothingToClaim      = 30,
 }
 
 // ─── Storage shapes ────────────────────────────────────────────────────────
@@ -232,46 +219,6 @@ pub struct ContractEntry {
     pub registered_at: u32,
     /// Whether indexing is currently active for this contract.
     pub active: bool,
-}
-
-/// Per-registration staker reward pool.
-///
-/// Slashed stake is split between the treasury and this pool. Stakers on
-/// *other* registrations accrue a pro-rata share of the pool based on the
-/// stake they held at the moment of the slash, and pull their share with
-/// [`LuminaRegistry::claim_staker_reward`].
-///
-/// ## Why a pull, not a push
-///
-/// Distribution is a claim rather than a loop over stakers because the cost
-/// of a push scales with the number of stakers, and that number is not
-/// bounded by anything the contract controls. A slash would have to iterate
-/// every staker on every other registration, paying for each transfer, and
-/// would fail outright once the set grew past the per-transaction budget —
-/// which is exactly when the mechanism matters most. A pull makes the cost of
-/// a slash O(1) and shifts the per-staker cost onto the party that benefits
-/// from claiming it.
-#[contracttype]
-#[derive(Clone, Debug, PartialEq)]
-pub struct RewardPool {
-    /// Total tokens set aside for stakers by slashes on this registration.
-    pub total: i128,
-    /// Total stake (across all registrations) at the last accrual, used as
-    /// the denominator for pro-rata shares.
-    pub total_stake_snapshot: i128,
-    /// Reward-per-unit-stake accumulator, scaled by `BPS_DENOMINATOR`.
-    pub acc_reward_per_stake: i128,
-}
-
-/// Per-staker claim state for one registration's reward pool.
-#[contracttype]
-#[derive(Clone, Debug, PartialEq)]
-pub struct RewardClaim {
-    /// Accumulator value at the staker's last claim, scaled by
-    /// `BPS_DENOMINATOR`.
-    pub acc_reward_per_stake: i128,
-    /// Tokens already paid out to this staker from this pool.
-    pub claimed: i128,
 }
 
 // ─── Category taxonomy ─────────────────────────────────────────────────────
@@ -511,9 +458,6 @@ pub enum ProposalAction {
     SetRegistrationFee(i128),
     /// Set the minimum stake threshold; zero disables it.
     ConfigureMinimumStake(i128),
-    /// Set the treasury share of a slash in basis points; the remainder goes
-    /// to the staker reward pool.
-    ConfigureSlashSplit(u32),
     /// Withdraw from the treasury.
     WithdrawFromTreasury(i128),
 }
@@ -591,16 +535,6 @@ pub enum DataKey {
     WithdrawLockedUntil(Address),
     /// i128 — minimum stake threshold; zero disables it.
     MinimumStake,
-    /// u32 — treasury share of a slash in basis points; the remainder goes to
-    /// the staker reward pool. Missing means [`DEFAULT_TREASURY_SHARE_BPS`].
-    TreasuryShareBps,
-    /// RewardPool — the staker reward pool for a slashed registration.
-    RewardPool(Address),
-    /// RewardClaim — a staker's claim state against one registration's pool.
-    RewardClaim(Address, Address),
-    /// i128 — total stake held by `staker` across all registrations, used to
-    /// weight pro-rata shares of a slash.
-    StakerTotalStake(Address),
 
     // ── Category taxonomy ───────────────────────────────────────────────────
     /// Vec<Category> — the categories a registration declared, deduplicated.
@@ -1075,31 +1009,6 @@ impl LuminaRegistry {
         env.events().publish(
             (Symbol::new(&env, "proposal_proposed"),),
             (proposal_id, proposer, Symbol::new(&env, "configure_minimum_stake"), minimum),
-        );
-        Ok(proposal_id)
-    }
-
-    /// Set the treasury share of a slash, in basis points. The remainder goes
-    /// to the staker reward pool. `10_000` sends everything to the treasury,
-    /// matching the pre-split behaviour.
-    pub fn propose_configure_slash_split(
-        env: Env,
-        proposer: Address,
-        treasury_share_bps: u32,
-    ) -> Result<u32, RegistryError> {
-        proposer.require_auth();
-        Self::assert_is_admin(&env, &proposer)?;
-        if treasury_share_bps > BPS_DENOMINATOR {
-            return Err(RegistryError::InvalidSplit);
-        }
-        let proposal_id = Self::create_proposal(
-            &env,
-            proposer.clone(),
-            ProposalAction::ConfigureSlashSplit(treasury_share_bps),
-        );
-        env.events().publish(
-            (Symbol::new(&env, "proposal_proposed"),),
-            (proposal_id, proposer, Symbol::new(&env, "configure_slash_split"), treasury_share_bps),
         );
         Ok(proposal_id)
     }
@@ -1904,7 +1813,6 @@ impl LuminaRegistry {
         let old_stake = Self::stake_of(&env, &contract_id);
         let staked = old_stake + amount;
         env.storage().persistent().set(&DataKey::Stake(contract_id.clone()), &staked);
-        Self::add_staker_total_stake(&env, &owner, amount);
 
         let total_staked: i128 = env.storage().instance().get(&DataKey::TotalStaked).unwrap_or(0);
         env.storage().instance().set(&DataKey::TotalStaked, &(total_staked + amount));
@@ -1974,7 +1882,6 @@ impl LuminaRegistry {
         );
 
         env.storage().persistent().set(&DataKey::Stake(contract_id.clone()), &0i128);
-        Self::sub_staker_total_stake(&env, &owner, staked);
 
         let total_staked: i128 = env.storage().instance().get(&DataKey::TotalStaked).unwrap_or(0);
         env.storage().instance().set(&DataKey::TotalStaked, &(total_staked - staked));
@@ -1993,90 +1900,6 @@ impl LuminaRegistry {
         );
 
         Ok(staked)
-    }
-
-    /// Claim this caller's pro-rata share of the staker reward pool accrued
-    /// from slashes on `slashed_contract_id`.
-    ///
-    /// A pull rather than a push: the slash itself only updates an
-    /// accumulator, and each staker pays for their own transfer when they
-    /// claim. See [`RewardPool`] for why a push would not work.
-    ///
-    /// The share is weighted by the caller's total stake across all
-    /// registrations at the time of the slash, so a staker who staked more
-    /// against more registrations receives proportionally more. A staker with
-    /// no stake at the time of the slash accrues nothing.
-    pub fn claim_staker_reward(
-        env: Env,
-        staker: Address,
-        slashed_contract_id: Address,
-    ) -> Result<i128, RegistryError> {
-        staker.require_auth();
-
-        let mut pool: RewardPool = env.storage().persistent()
-            .get(&DataKey::RewardPool(slashed_contract_id.clone()))
-            .ok_or(RegistryError::NoRewardPool)?;
-
-        let staker_stake = Self::staker_total_stake(&env, &staker);
-        if staker_stake <= 0 || pool.total_stake_snapshot <= 0 {
-            return Err(RegistryError::NothingToClaim);
-        }
-
-        let mut claim: RewardClaim = env.storage().persistent()
-            .get(&DataKey::RewardClaim(slashed_contract_id.clone(), staker.clone()))
-            .unwrap_or(RewardClaim {
-                acc_reward_per_stake: 0,
-                claimed: 0,
-            });
-
-        let delta = pool.acc_reward_per_stake - claim.acc_reward_per_stake;
-        if delta <= 0 {
-            return Err(RegistryError::NothingToClaim);
-        }
-
-        let owed = staker_stake
-            .checked_mul(delta)
-            .ok_or(RegistryError::InvalidAmount)?
-            / BPS_DENOMINATOR as i128;
-        if owed <= 0 {
-            return Err(RegistryError::NothingToClaim);
-        }
-
-        let (token_id, _) = Self::staking_config(&env)?;
-        token::Client::new(&env, &token_id).transfer(
-            &env.current_contract_address(),
-            &staker,
-            &owed,
-        );
-
-        claim.acc_reward_per_stake = pool.acc_reward_per_stake;
-        claim.claimed += owed;
-        env.storage().persistent().set(
-            &DataKey::RewardClaim(slashed_contract_id.clone(), staker.clone()),
-            &claim,
-        );
-
-        pool.total -= owed;
-        env.storage().persistent().set(&DataKey::RewardPool(slashed_contract_id.clone()), &pool);
-
-        env.events().publish(
-            (Symbol::new(&env, "staker_reward_claimed"),),
-            (slashed_contract_id, staker, owed),
-        );
-
-        Ok(owed)
-    }
-
-    /// The staker reward pool accrued from slashes on `contract_id`, if any.
-    pub fn get_reward_pool(env: Env, contract_id: Address) -> Option<RewardPool> {
-        env.storage().persistent().get(&DataKey::RewardPool(contract_id))
-    }
-
-    /// The treasury share of a slash, in basis points.
-    pub fn get_treasury_share_bps(env: Env) -> u32 {
-        env.storage().instance()
-            .get(&DataKey::TreasuryShareBps)
-            .unwrap_or(DEFAULT_TREASURY_SHARE_BPS)
     }
 
     // ─── View ──────────────────────────────────────────────────────────────

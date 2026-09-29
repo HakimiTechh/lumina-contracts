@@ -149,13 +149,15 @@ pub trait RegistryInterface {
     fn get_staking_config(env: Env) -> Result<(Address, Address), RegistryError>;
 
     /// The governance-set split of a slash between the treasury and the
-    /// staker reward pool, in basis points (0–10000). A value of 10000 means
-    /// the whole slash goes to the treasury, matching pre-split behaviour.
-    fn get_slash_treasury_bps(env: Env) -> u32;
+    /// staker reward pool, in basis points of the slashed amount that go to
+    /// the reward pool. Zero means the whole slash goes to the treasury,
+    /// matching the pre-reward-pool behaviour.
+    fn get_slash_reward_bps(env: Env) -> u32;
 
-    /// The share of a slash owed to `staker` from the reward pool, claimable
-    /// via `claim_slash_reward`. Zero if the staker has nothing to claim.
-    fn get_claimable_slash_reward(env: Env, staker: Address) -> i128;
+    /// The staker reward pool's unclaimed balance for `staker`, accrued from
+    /// slashes on registrations the staker did not own. Claimed via
+    /// `claim_slash_reward`.
+    fn get_slash_reward(env: Env, staker: Address) -> i128;
 
     /// The per-registration fee. Zero means registration is free.
     fn get_registration_fee(env: Env) -> i128;
@@ -237,10 +239,6 @@ pub trait RegistryInterface {
 
     /// Every contract registered by `owner`, **including** deactivated ones.
     fn get_contracts_by_owner(env: Env, owner: Address, offset: u32, limit: u32) -> Vec<ContractEntry>;
-
-    /// Claim the caller's accumulated share of past slashes from the staker
-    /// reward pool. Errors with `NothingToClaim` if the balance is zero.
-    fn claim_slash_reward(env: Env, staker: Address) -> Result<i128, RegistryError>;
 }
 
 /// Errors the registry's read-only surface can return.
@@ -308,8 +306,10 @@ pub enum RegistryError {
     InsufficientFee = 25,
     /// Tag count or length exceeds bounds.
     InvalidTags = 26,
+    /// The slash reward split is out of range (must be at most 10_000 bps).
+    InvalidSlashRewardBps = 27,
     /// The caller has no slash reward to claim.
-    NothingToClaim = 27,
+    NothingToClaim = 28,
 }
 
 /// Byte-compatible with `lumina_registry::ContractEntry`.
@@ -481,7 +481,10 @@ pub enum ProposalAction {
     ConfigureRegistrationRateLimit(u32, u32),
     /// Set the registration fee in the stake token; zero disables it.
     SetRegistrationFee(i128),
-    /// Set the slash split between treasury and staker reward pool, in basis
-    /// points: `(treasury_bps, reward_pool_bps)`. Must sum to 10000.
-    ConfigureSlashSplit(u32, u32),
+    /// Set the share of each slash routed to the staker reward pool, in basis
+    /// points of the slashed amount. Zero sends the whole slash to the
+    /// treasury, matching the pre-reward-pool behaviour.
+    SetSlashRewardBps(u32),
+    /// Claim the caller's accrued share of past slashes from the reward pool.
+    ClaimSlashReward,
 }

@@ -180,7 +180,7 @@ pub enum RegistryError {
     InvalidAttestation = 27,
     /// The caller has no attestation to revoke on this registration.
     AttestationNotFound = 28,
-    /// The configured treasury split is greater than 100%.
+    /// The configured treasury split is greater than 10000 basis points.
     InvalidSplit        = 29,
     /// The caller has no claimable staker reward to withdraw.
     NothingToClaim      = 30,

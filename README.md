@@ -1,1 +1,416 @@
-IyBMdW1pbmEgQ29udHJhY3RzCgo+IFNvcm9iYW4gc21hcnQgY29udHJhY3RzIGZvciBMdW1pbmEsIGFuIG9wZW4tc291cmNlIGV2ZW50IGluZGV4ZXIgYW5kIEdyYXBoUUwgZGF0YSBsYXllciBmb3IgdGhlIFN0ZWxsYXIgbmV0d29yay4KClBhcnQgb2YgdGhlIEx1bWluYSBwcm9qZWN0LCBzcGxpdCBhY3Jvc3MgdGhyZWUgcmVwb3M6CgotIFtsdW1pbmEtZnJvbnRlbmRdKGh0dHBzOi8vZ2l0aHViLmNvbS9MdW1lZWVuYS9sdW1pbmEtZnJvbnRlbmQpIOKAlCBOZXh0LmpzIGV4cGxvcmVyIFVJCi0gW2x1bWluYS1iYWNrZW5kXShodHRwczovL2dpdGh1Yi5jb20vTHVtZWVlbmEvbHVtaW5hLWJhY2tlbmQpIOKAlCBpbmRleGVyICsgR3JhcGhRTCBBUEkgKyBQb3N0Z3JlU1FMIHNjaGVtYQotIFtsdW1pbmEtY29udHJhY3RzXShodHRwczovL2dpdGh1Yi5jb20vTHVtZWVlbmEvbHVtaW5hLWNvbnRyYWN0cykg4oCUIHRoaXMgcmVwbwoKIyMgV2hlcmUgdGhlIHJlZ2lzdHJ5IGZpdHMKCkx1bWluYSBpbmRleGVzIFNvcm9iYW4gY29udHJhY3QgZXZlbnRzLCBidXQgYW4gaW5kZXhlciBoYXMgdG8ga25vdyAqd2hpY2gqCmNvbnRyYWN0cyB0byB3YXRjaC4gV2l0aG91dCB0aGlzIGNvbnRyYWN0LCB0aGF0IGxpc3QgaXMgYSBzdGF0aWMKYElOREVYRURfQ09OVFJBQ1RfSURTYCBlbnYgdmFyIHRoYXQgYW4gb3BlcmF0b3IgZWRpdHMgYnkgaGFuZC4gVGhlIHJlZ2lzdHJ5CnJlcGxhY2VzIHRoZSBoYW5kLWVkaXRlZCBsaXN0IHdpdGggYW4gb24tY2hhaW4gb25lLiBBIHByb2plY3QgbGlzdHMgaXRzZWxmIGJ5CmNhbGxpbmcgYHJlZ2lzdGVyX2NvbnRyYWN0YCwgYW5kIGV2ZXJ5IEx1bWluYSBpbmRleGVyIHBvaW50ZWQgYXQgdGhlIHJlZ2lzdHJ5CnN0YXJ0cyBpbmRleGluZyB0aGF0IHByb2plY3QncyBldmVudHMgb24gaXRzIG5leHQgcG9sbC4gTm8gb3BlcmF0b3IgbmVlZHMgdG8KYWN0IGFuZCBubyBvbmUgbmVlZHMgdG8gcmVkZXBsb3kuIERpc2NvdmVyeSBpcyB0aGUgcmVhc29uIHRoZSBjb250cmFjdCBleGlzdHMuCkNhdGVnb3JpZXMsIHN0YWtpbmcgYW5kIGdvdmVybmFuY2UgYWxsIGV4aXN0IHRvIG1ha2UgdGhhdCBsaXN0IHdvcnRoIHRydXN0aW5nLgoKYGBgCiBwcm9qZWN0IOKUgOKUgHJlZ2lzdGVyX2NvbnRyYWN04pSA4pSA4pa2IOKUjOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkCDil4Ag4pSA4pSAZ2V0X2FjdGl2ZV9jb250cmFjdHPilIDilIAgaW5kZXhlciDilIDilIBnZXRFdmVudHPilIDilIDilrYgcHJvamVjdCdzIGV2ZW50cwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiByZWdpc3RyeSDilIIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIIKIGZyb250ZW5kIOKUgOKUgHJlYWQgdmlld3PilIDilIDilIDilIDilIDilIDilIDilIDilIDilrbilJDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIIKICAgIOKUgiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCIGVtaXRzIGNvbnRyYWN0X3JlZ2lzdGVyZWQsIOKApiAgICBQb3N0Z3JlU1FMIC8gR3JhcGhRTAogICAg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIGhpc3RvcnkgdmlldyDil4DilIDilIDilIDilIDilLTilIDilIDilIDilIDilIDilIDilIDgaW5kZXhlZCBsaWtlIGFueSBvdGhlciBjb250cmFjdCdzIGV2ZW50cwpgYGAKCiMjIyBIb3cgdGhlIGluZGV4ZXIgZGlzY292ZXJzIGNvbnRyYWN0cwoKW2x1bWluYS1iYWNrZW5kXShodHRwczovL2dpdGh1Yi5jb20vTHVtZWVlbmEvbHVtaW5hLWJhY2tlbmQpJ3MgaW5kZXhlcgooYGluZGV4ZXIvc3JjL3JlZ2lzdHJ5LnRzYCkgdHVybnMgZGlzY292ZXJ5IG9uIHdoZW4gYFJFR0lTVFJZX0NPTlRSQUNUX0lEYCBhbmQKYFJFR0lTVFJZX1JFQURfQUNDT1VOVGAgYXJlIHNldC4gT24gYSB0aW1lciBpdCB0aGVuOgoKMS4gQ2FsbHMgYGdldF9hY3RpdmVfY29udHJhY3RzKG9mZnNldCwgNTApYCB0aHJvdWdoIGBzaW11bGF0ZVRyYW5zYWN0aW9uYC4gVGhpcwogICBpcyBhIHJlYWQtb25seSBjYWxsLCBzbyB0aGUgcmVhZCBhY2NvdW50IG5lZWRzIG5vIGtleSBhbmQgcGF5cyBubyBmZWUuIEl0CiAgIGtlZXBzIHBhZ2luZyB1bnRpbCBhIHBhZ2UgY29tZXMgYmFjayB3aXRoIGZld2VyIHRoYW4gNTAgZW50cmllcywgd2l0aCBhCiAgIGNhcCBvZiAyMCBwYWdlcy4KMi4gVGFrZXMgYGNvbnRyYWN0X2lkYCBmcm9tIGVhY2ggYENvbnRyYWN0RW50cnlgLiBJdCBkcm9wcyBhbnkgYWRkcmVzcyB0aGF0IGlzCiAgIG5vdCBhIGBD4oCmYCBjb250cmFjdCBhZGRyZXNzLCBiZWNhdXNlIHRoZSByZWdpc3RyeSBhY2NlcHRzIGFueSBgQWRkcmVzc2AgYW5kCiAgIG9uZSBhY2NvdW50IGFkZHJlc3MgaW4gdGhlIGxpc3Qgd291bGQgbWFrZSB0aGUgd2hvbGUgYGdldEV2ZW50c2AgZmlsdGVyIGZhaWwuCjMuIE1lcmdlcyB0aG9zZSBJRHMgd2l0aCB0aGUgc3RhdGljIGxpc3QgYW5kIGluZGV4ZXMgdGhlaXIgZXZlbnRzLgoKRGVhY3RpdmF0aW5nIGEgcmVnaXN0cmF0aW9uIHRoZXJlZm9yZSBzdG9wcyB0aGUgaW5kZXhlciBmcm9tIHBvbGxpbmcgdGhhdApjb250cmFjdC4gQWxyZWFkeS1pbmRleGVkIGV2ZW50cyBzdGF5IGluIHRoZSBkYXRhYmFzZS4KCkEgbm90ZSBvbiBwYWdpbmcgc2VtYW50aWNzOiBgb2Zmc2V0YCBpcyBhIHBvc2l0aW9uIGluICpyZWdpc3RyYXRpb24gb3JkZXIqLApjb3VudGluZyBkZWFjdGl2YXRlZCBlbnRyaWVzLCBub3QgYSBjb3VudCBvZiBhY3RpdmUgb25lcy4gQSBwYWdlIGNhbiBjb21lIGJhY2sKd2l0aCBmZXdlciB0aGFuIGBsaW1pdGAgZW50cmllcyBldmVuIHdoZW4gbW9yZSBhY3RpdmUgcmVnaXN0cmF0aW9ucyBmb2xsb3csCmJlY2F1c2UgdGhlIHBhZ2Ugc2tpcHBlZCBvdmVyIGRlYWN0aXZhdGVkIGVudHJpZXMuIFRoZSBzYW1lIGhvbGRzIGZvcgpgZ2V0X2FjdGl2ZV9wcm9maWxlc2AgYW5kIGBnZXRfYWN0aXZlX2NvbnRyYWN0c19ieV9jYXRlZ29yeWAuCgojIyMgV2hhdCB0aGUgZnJvbnRlbmQgcmVhZHMKCltsdW1pbmEtZnJvbnRlbmRdKGh0dHBzOi8vZ2l0aHViLmNvbS9MdW1lZWVuYS9sdW1pbmEtZnJvbnRlbmQpJ3MgYC9yZWdpc3RyeWAKcGFnZSAoYGxpYi9yZWdpc3RyeS50c2ApIHJlYWRzIHRoZSBjb250cmFjdCBkaXJlY3RseSBvdmVyIFNvcm9iYW4gUlBDIHdpdGggdGhlCnNhbWUgc2ltdWxhdGUtb25seSBwYXR0ZXJuLiBJdCB1c2VzIGBnZXRfYWN0aXZlX2NvbnRyYWN0c2AsCmBnZXRfYWN0aXZlX3Byb2ZpbGVzYCwgYGdldF9hY3RpdmVfY29udHJhY3RzX2J5X2NhdGVnb3J5YCwgYGdldF9jYXRlZ29yaWVzYCwKYGdldF9jb250cmFjdHNfYnlfb3duZXJgLCBgZ2V0X3JlcHV0YXRpb25gIGFuZCBgZ2V0X3NsYXNoZXNgLgoKVGhlIGNvbnRyYWN0IHN0b3JlcyBvbmx5IGN1cnJlbnQgc3RhdGUuIGBDb250cmFjdEVudHJ5LmFjdGl2ZWAgaXMgYSBib29sZWFuLApub3QgYSBsb2csIHNvICJ3aGVuIHdhcyB0aGlzIGRlYWN0aXZhdGVkLCBhbmQgYnkgd2hvbT8iIGNhbm5vdCBiZSByZWFkIGZyb20Kc3RvcmFnZS4gVGhlIHJlZ2lzdHJhdGlvbiBoaXN0b3J5IHZpZXcgKGBsaWIvcmVnaXN0cnlIaXN0b3J5LnRzYCkgcmVidWlsZHMKdGhhdCBoaXN0b3J5IGZyb20gdGhlIHJlZ2lzdHJ5J3MgKipvd24gZXZlbnRzKiouIFRoZSBpbmRleGVyIHN0b3JlcyB0aGVtCmJlY2F1c2UgdGhlIHJlZ2lzdHJ5IGlzIGl0c2VsZiBhIHJlZ2lzdGVyZWQgY29udHJhY3QsIGFuZCB0aGUgZnJvbnRlbmQgcXVlcmllcwp0aGVtIGZyb20gdGhlIEdyYXBoUUwgQVBJIGZpbHRlcmVkIHRvIGBjb250cmFjdElkID0gPHJlZ2lzdHJ5PmA6Cgp8IEV2ZW50IHRvcGljIHwgRGF0YSB0dXBsZSB8IEhpc3Rvcnkgcm93IHwKfCAtLS0gfCAtLS0gfCAtLS0gfAp8IGBjb250cmFjdF9yZWdpc3RlcmVkYCB8IGAoY29udHJhY3RfaWQsIG93bmVyLCBuYW1lLCBjYXRlZ29yaWVzKWAgfCBSZWdpc3RlcmVkIHwKfCBgY29udHJhY3RfZGVhY3RpdmF0ZWRgIHwgYChjb250cmFjdF9pZCwgY2FsbGVyKWAsIG9yIGAoY29udHJhY3RfaWQsICJnb3Zlcm5hbmNlIilgIHdoZW4gZGVhY3RpdmF0ZWQgYnkgcHJvcG9zYWwgfCBEZWFjdGl2YXRlZCB8CnwgYG1ldGFkYXRhX3VwZGF0ZWRgIHwgYChjb250cmFjdF9pZCwgb3duZXIsIG5hbWUpYCB8IE1ldGFkYXRhIHVwZGF0ZWQgfAp8IGBvd25lcnNoaXBfdHJhbnNmZXJyZWRgIHwgYChjb250cmFjdF9pZCwgcHJldmlvdXNfb3duZXIsIG5ld19vd25lcilgIHwgT3duZXJzaGlwIHRyYW5zZmVycmVkIHwKClRoZSBoaXN0b3J5IHZpZXcgbWF0Y2hlcyBvbiB0aGUgKipmaXJzdCB0b3BpYyoqIGFuZCB0cmVhdHMgdGhlICoqZmlyc3QKZWxlbWVudCBvZiB0aGUgZGF0YSB0dXBsZSoqIGFzIHRoZSByZWdpc3RyYXRpb24gdGhlIGV2ZW50IGNvbmNlcm5zLiBPdGhlcgpldmVudHMgKGBjYXRlZ29yaWVzX3VwZGF0ZWRgLCBgc3Rha2VfKmAsIGBwcm9wb3NhbF8qYCwgYHJlZ2lzdHJ5X3VwZ3JhZGVkYCwg4oCmKQpzdGlsbCBhcHBlYXIgaW4gdGhlIGhpc3RvcnksIHNob3duIGFzIGEgZ2VuZXJpYyAiUmVnaXN0cnkgZXZlbnQiIHJvdy4KCiMjIyBXaGF0IGJyZWFrcyBkb3duc3RyZWFtIHdoZW4gdGhlIGludGVyZmFjZSBjaGFuZ2VzCgpOZWl0aGVyIHNpYmxpbmcgcmVwbyBnZW5lcmF0ZXMgYmluZGluZ3MgZnJvbSB0aGlzIGNvbnRyYWN0LiBCb3RoIGNhbGwgbWV0aG9kcyBieQpuYW1lLCB3aXRoIGFyZ3VtZW50cyBidWlsdCBieSBoYW5kLCBhbmQgZGVjb2RlIHJlc3VsdHMgYXMgcGxhaW4gSlMgb2JqZWN0cy4gQQpjaGFuZ2UgaGVyZSBkb2VzIG5vdCBmYWlsIHRoZWlyIGJ1aWxkcy4gSXQgZmFpbHMgYXQgcnVudGltZSwgb2Z0ZW4gcXVpZXRseToKCnwgQ2hhbmdlIGhlcmUgfCBFZmZlY3QgZG93bnN0cmVhbSB8CnwgLS0tIHwgLS0tIHwKfCBSZW5hbWUgb3IgcmVtb3ZlIGBnZXRfYWN0aXZlX2NvbnRyYWN0c2AsIG9yIGNoYW5nZSBpdHMgYXJndW1lbnRzIHwgSW5kZXhlciBkaXNjb3ZlcnkgZmFpbHMgZXZlcnkgcG9sbC4gUmVnaXN0ZXJlZCBjb250cmFjdHMgc3RvcCBiZWluZyBpbmRleGVkLCBhbmQgdGhlIHN0YXRpYyBsaXN0IGtlZXBzIHdvcmtpbmcsIHdoaWNoIGhpZGVzIHRoZSBmYWlsdXJlLiB8CnwgUmVuYW1lIGEgYENvbnRyYWN0RW50cnlgIGZpZWxkIChlLmcuIGBjb250cmFjdF9pZGApIHwgVGhlIGluZGV4ZXIgcmVhZHMgYHVuZGVmaW5lZGAgsSBEcywgZmlsdGVycyB0aGVtIGFsbCBvdXQsIGFuZCBkaXNjb3ZlcnMgbm90aGluZy4gVGhlIGZyb250ZW5kIHJlbmRlcnMgYmxhbmsgcm93cy4gfAp8IENoYW5nZSBgb2Zmc2V0YC9gbGltaXRgIHNlbWFudGljcyBvciB0aGUgcGFnZSBjYXAgfCBUaGUgaW5kZXhlciBhbmQgdGhlIGZyb250ZW5kIHN0b3AgcGFnaW5nIHRvbyBlYXJseSBvciB0b28gbGF0ZSwgc28gY29udHJhY3RzIGFyZSBzaWxlbnRseSBtaXNzZWQgb3IgZHVwbGljYXRlZC4gfAp8IENoYW5nZSB0aGUgYXJndW1lbnRzIG9mIGByZWdpc3Rlcl9jb250cmFjdGAgfCBFdmVyeSByZWdpc3RyYW50J3Mgc2NyaXB0cyBhbmQgYmluZGluZ3MgYnJlYWsuIFRoaXMgaGFwcGVuZWQgd2hlbiBgY2F0ZWdvcmllc2Agd2FzIGFkZGVkLiB8CnwgUmVuYW1lIGFuIGV2ZW50IHRvcGljLCBvciBtb3ZlIGBjb250cmFjdF9pZGAgb3V0IG9mIHRoZSBmaXJzdCBkYXRhIHNsb3QgfCBIaXN0b3J5IHJvd3MgdHVybiBpbnRvICJSZWdpc3RyeSBldmVudCIgcm93cyBvciBsb3NlIHRoZWlyIHN1YmplY3QsIHNvIHRoZSBwZXItY29udHJhY3QgaGlzdG9yeSBpcyBlbXB0eS4gfAp8IEFkZCBvciByZW9yZGVyIGBDYXRlZ29yeWAgdmFyaWFudHMgfCBUaGUgZnJvbnRlbmQncyBgQ0FURUdPUklFU2AgbGlzdCBubyBsb25nZXIgbWF0Y2hlcywgYW5kIGNhdGVnb3J5IGZpbHRlcnMgZHJvcCB1bmtub3duIHZhbHVlcy4gfAoKYHJlZ2lzdHJ5L3Rlc3RzL2ludGVyZmFjZS5yc2AgZ3VhcmRzIHRoZSBmdW5jdGlvbiBhbmQgdHlwZSBoYWxmIG9mIHRoaXMgbGlzdC4KU2VlIFtJbnRlcmZhY2Ugc25hcHNob3RdKCNpbnRlcmZhY2Utc25hcHNob3QpLiBFdmVudCB0b3BpY3MgYW5kIHBheWxvYWRzIGFyZQpub3QgcGFydCBvZiB0aGUgY29udHJhY3Qgc3BlYywgc28gcmV2aWV3IGNoYW5nZXMgdG8gYGVudi5ldmVudHMoKS5wdWJsaXNoYApjYWxscyBhZ2FpbnN0IHRoZSB0YWJsZSBhYm92ZS4KCiMjIEx1bWluYSBSZWdpc3RyeQoKcmVnaXN0cnkvYCDigJQgYW4gb24tY2hhaW4gbWFuaWZlc3Qgb2YgU29yb2JhbiBjb250cmFjdHMgcmVnaXN0ZXJlZCBmb3IgTHVtaW5hIGluZGV4aW5nLiBBbnkgcHJvamVjdCBjYW4gY2FsbCBgcmVnaXN0ZXJfY29udHJhY3QoKWAgdG8gYWRkIHRoZWlyIGNvbnRyYWN0OyBbbHVtaW5hLWJhY2tlbmRdKGh0dHBzOi8vZ2l0aHViLmNvbS9MdW1lZWVuYS9sdW1pbmEtYmFja2VuZCkncyBpbmRleGVyIGNhbiB0aGVuIGRpc2NvdmVyIGFuZCBpbmRleCB0aGVpciBldmVudHMuCgpgYGBydXN0CnJlZ2lzdHJ5LnJlZ2lzdGVyX2NvbnRyYWN0KG93bmVyLCBjb250cmFjdF9pZCwgIk15IFByb3RvY29sIiwgIkEgRGVGaSBwcm90b2NvbCBvbiBTdGVsbGFyIiwgdmVjIVtDYXRlZ29yeTo6RGVGaV0pCmBgYAoKYGdldF9hY3RpdmVfY29udHJhY3RzKG9mZnNldCwgbGltaXQpYCByZXR1cm5zIGEgcGFnaW5hdGVkIGxpc3Qgb2YgYWN0aXZlIHJlZ2lzdHJhdGlvbnMgZm9yIGRpc2NvdmVyeS4KCiMjIyBDYXRlZ29yaWVzCgpFdmVyeSByZWdpc3RyYXRpb24gZGVjbGFyZXMgYXQgbGVhc3Qgb25lIGNhdGVnb3J5LCBzbyB0aGUgUmVnaXN0cnkgc3VwcG9ydHMKYnJvd3NpbmcgcmF0aGVyIHRoYW4gb25seSBhIGZsYXQgbGlzdDoKCmBEZUZpYCDCtyBgTmZ0YCDCtyBgR2FtaW5nYCDCtyBgSWRlbnRpdHlgIMK3IGBJbmZyYXN0cnVjdHVyZWAgwrcgYFBheW1lbnRzYCDCtwpgT3JhY2xlYCDCtyBgRGFvYCDCtyBgT3RoZXJgCgp8IE1ldGhvZCB8IFdobyBjYW4gY2FsbCBpdCB8CnwgLS0tIHwgLS0tIHwKfCBgZ2V0X2FjdGl2ZV9jb250cmFjdHNfYnlfY2F0ZWdvcnkoY2F0ZWdvcnksIG9mZnNldCwgbGltaXQpYCB8IGFueW9uZSDigJQgc2FtZSBwYWdpbmcgc2VtYW50aWNzIGFzIGBnZXRfYWN0aXZlX2NvbnRyYWN0c2AgfAp8IGBnZXRfY2F0ZWdvcmllcyhjb250cmFjdF9pZClgIHwgYW55b25lIHwKfCBgc2V0X2NhdGVnb3JpZXMob3duZXIsIGNvbnRyYWN0X2lkLCBjYXRlZ29yaWVzKWAgfCB0aGUgcmVnaXN0ZXJlZCBvd25lciBvbmx5IHwKfCBgcHJ1bmVfY2F0ZWdvcnkoY2F0ZWdvcnkpYCB8IGFueW9uZSDigJQgcmVtb3ZlcyBkZWFkIGluZGV4IHJlZmVyZW5jZXMsIHJldHVybnMgdGhlIGNvdW50IHJlbW92ZWQgfAp8IGBwcnVuZV9hbGxfY29udHJhY3RzKClgIHwgYW55b25lIOKAlCBzYW1lLCBmb3IgdGhlIGdsb2JhbCBgQWxsQ29udHJhY3RzYCBpbmRleCB8CgpBIGNvbnRyYWN0IGNhbiBiZSBmaWxlZCB1bmRlciBzZXZlcmFsIGNhdGVnb3JpZXMgYW5kIGlzIGRpc2NvdmVyYWJsZSB1bmRlciBlYWNoLgpEdXBsaWNhdGVzIGFyZSBjb2xsYXBzZWQsIHNvIHBhc3NpbmcgYSBjYXRlZ29yeSB0d2ljZSBpbmRleGVzIGl0IG9uY2UuCgpUaGUgdm9jYWJ1bGFyeSBpcyBhIGZpeGVkIGVudW0gcmF0aGVyIHRoYW4gZnJlZS1mb3JtIHRhZ3MgYmVjYXVzZSB0aGUgcG9pbnQgaXMK ynJvd3NpbmcsIGFuZCBmcmVlLWZvcm0gdGFncyBmcmFnbWVudCBpdCBpbW1lZGlhdGVseSDigJQgYERlRmlgLCBgZGVmaWAgYW5kIGBEZS1GaWAKYmVjb21lIHRocmVlIGNhdGVnb3JpZXMgZWFjaCBob2xkaW5nIHBhcnQgb2YgdGhlIGFuc3dlci4gQWRkaW5nIGEgY2F0ZWdvcnkgaXMgYQpjb250cmFjdCB1cGdyYWRlOyBgT3RoZXJgIGlzIHRoZSBlc2NhcGUgaGF0Y2ggdW50aWwgdGhlbi4KCmBkZWFjdGl2YXRlYCBkb2VzIG5vdCByZXdyaXRlIGNhdGVnb3J5IGluZGljZXMuIGBnZXRfYWN0aXZlX2NvbnRyYWN0c19ieV9jYXRlZ29yeWAKZmlsdGVycyBvbiBgYWN0aXZlYCwgZXhhY3RseSBhcyB0aGUgZ2xvYmFsIGxpc3RpbmcgZG9lcywgd2hpY2ggaXMgd2hhdCBrZWVwcyBhCmRlYWN0aXZhdGVkIHJlZ2lzdHJhdGlvbiBvdXQgb2YgYnJvd3NpbmcuCgpgZGVyZWdpc3RlcmAgaXMgdGhlIG9wcG9zaXRlOiBpdCBkZWxldGVzIHRoZSBlbnRyeSBpdHNlbGYgKG93bmVyIG9ubHksIG11c3QKYWxyZWFkeSBiZSBkZWFjdGl2YXRlZCBhbmQgZnVsbHkgdW5zdGFrZWQpIGFuZCBlYWdlcmx5IHJlbW92ZXMgaXQgZnJvbSB0aGUKZ2xvYmFsLCBvd25lciwgYW5kIGV2ZXJ5IGNhdGVnb3J5IGluZGV4LCBzbyBhIGRlcmVnaXN0ZXJlZCBjb250cmFjdCBsZWF2ZXMgbm8KaW5kZXggcmVmZXJlbmNlLiBTbGFzaCByZWNvcmRzIGFyZSBrZXB0IGZvciBhdWRpdGFiaWxpdHkuIFN0b3JhZ2UgYXJjaGl2YWwgY2FuCnN0aWxsIHN0cmFuZCBhIHJlZmVyZW5jZSB0aGUgZWFnZXIgcGF0aHMgbmV2ZXIgc2F3IOKAlCBgcHJ1bmVfY2F0ZWdvcnlgIC8KYHBydW5lX2FsbF9jb250cmFjdHNgIGNvdmVyIHRoYXQgY2FzZS4gVGhleSBhcmUgcGVybWlzc2lvbmxlc3MgYW5kIGlkZW1wb3RlbnQKKHNhZmUgdG8gY2FsbCByZXBlYXRlZGx5OyBhIHNlY29uZCBjYWxsIHJlbW92ZXMgbm90aGluZyBhbmQgcmV0dXJucyAwKSwgc28gYW4KaW5kZXhlciBvciBhIGNyb24tbGlrZSBjYWxsZXIgY2FuIHBheSBmb3IgdGhlIGNsZWFudXAgb24gYSBzY2hlZHVsZS4KClJlZ2lzdHJhdGlvbnMgYXJlIGFsc28gbWFuYWdlYWJsZSBhZnRlciB0aGUgZmFjdDoKCnwgTWV0aG9kIHwgV2hvIGNhbiBjYWxsIGl0IHwKfCAtLS0gfCAtLS0gfAp8IGBnZXRfY29udHJhY3RzX2J5X293bmVyKG93bmVyLCBvZmZzZXQsIGxpbWl0KWAgfCBhbnlvbmUg4oCUIHBhZ2luYXRlZCwgaW5jbHVkZXMgdGhlIG93bmVyJ3MgZGVhY3RpdmF0ZWQgZW50cmllcyB8CnwgYHVwZGF0ZV9tZXRhZGF0YShvd25lciwgY29udHJhY3RfaWQsIG5hbWUsIGRlc2NyaXB0aW9uKWAgfCB0aGUgcmVnaXN0ZXJlZCBvd25lciBvbmx5IHwKfCBgdHJhbnNmZXJfb3duZXJzaGlwKGNhbGxlciwgY29udHJhY3RfaWQsIG5ld19vd25lcilgIHwgdGhlIGN1cnJlbnQgb3duZXIgb3IgdGhlIGFkbWluIHwKfCBgZGVhY3RpdmF0ZShjYWxsZXIsIGNvbnRyYWN0X2lkKWAgfCB0aGUgY3VycmVudCBvd25lciBvciB0aGUgYWRtaW4gfAp8IGBkZXJlZ2lzdGVyKG93bmVyLCBjb250cmFjdF9pZClgIHwgdGhlIHJlZ2lzdGVyZWQgb3duZXIgb25seSDigJQgZW50cnkgbXVzdCBiZSBkZWFjdGl2YXRlZCBhbmQgdW5zdGFrZWQgfAoKQ291bnRlcnM6IGBnZXRfY29udHJhY3RfY291bnRgIGlzIHRoZSBsaXZlIHRvdGFsIChkZWFjdGl2YXRlZCBpbmNsdWRlZCwKZGVyZWdpc3RlcmVkIGV4Y2x1ZGVkKSwgYGdldF90b3RhbF9yZWdpc3RlcmVkYCBpcyB0aGUgbGlmZXRpbWUgdG90YWwKKG5ldmVyIGRlY3JlbWVudGVkKSwgYW5kIGBnZXRfYWN0aXZlX2NvbnRyYWN0X2NvdW50YCBpcyB0aGUgY3VycmVudGx5IGxpc3RlZApmaWd1cmUuIFRoZSBmcm9udGVuZCBzdGF0cyBwYWdlIHNob3VsZCByZWFkIGBnZXRfYWN0aXZlX2NvbnRyYWN0X2NvdW50YC4KCiMjIyBTdGFraW5nIGFuZCBzbGFzaGluZwoKUmVnaXN0cmF0aW9ucyBjYW4gYmUgc3Rha2VkIGFnYWluc3QuIEEgc3RhYmxlIHN0YWtlIGlzIGEganVkZ2VtZW50IHRoYXQgYQpyZWdpc3RyYXRpb24gd2lsbCBiZWhhdmU7IGEgc2xhc2ggaXMgdGhlIGNvbnNlcXVlbmNlIHdoZW4gaXQgZG9lcyBub3QuIFNsYXNoZWQKZnVuZHMgYXJlIHNwbGl0IGJldHdlZW4gdGhlIHRyZWFzdXJ5IGFuZCBhIHN0YWtlciByZXdhcmQgcG9vbCwgYWNjb3JkaW5nIHRvIGEKZ292ZXJuYW5jZS1zZXQgcHJvcG9ydGlvbi4gVGhlIHJld2FyZCBwb29sIGlzIGNsYWltZWQgYnkgc3Rha2VycyBvbiBvdGhlcgpyZWdpc3RyYXRpb25zLCBzbyB0aGUgcGVvcGxlIHdobyBzdGFrZWQgYWdhaW5zdCBhIGJhZCBhY3RvciBhcmUgbWFkZSB3aG9sZSBieQp0aGUgYmFkIGFjdG9yJ3MgbG9zcyByYXRoZXIgdGhhbiB0aGUgdHJlYXN1cnkgcHJvZml0aW5nIGZyb20gaXQuCgp8IE1ldGhvZCB8IFdobyBjYW4gY2FsbCBpdCB8CnwgLS0tIHwgLS0tIHwKfCBgc2V0X3NsYXNoX3NwbGl0KGFkbWluLCB0cmVhc3VyeV9icHNzKWAgfCB0aGUgYWRtaW4gb25seSDigJQgc2V0cyB0aGUgdHJlYXN1cnkgc2hhcmUgaW4gYmFzaXMgcG9pbnRzICgw4oCTMTAwMDApOyB0aGUgcmVtYWluZGVyIGdvZXMgdG8gdGhlIHN0YWtlciByZXdhcmQgcG9vbCB8CnwgYGdldF9zbGFzaF9zcGxpdCgpYCB8IGFueW9uZSDigJQgY3VycmVudCB0cmVhc3VyeSBzaGFyZSBpbiBiYXNpcyBwb2ludHMgfAp8IGBnZXRfc3Rha2VyX3Jld2FyZF9wb29sKClgIHwgYW55b25lIOKAlCB0b3RhbCB1bmNsYWltZWQgcmV3YXJkIHBvb2wgYmFsYW5jZSB8CnwgYGdldF9jbGFpbWFibGVfcmV3YXJkKHN0YWtlcillIHwgYW55b25lIOKAlCB0aGUgYW1vdW50IGBzdGFrZXJgIGNhbiBjbGFpbSBmcm9tIHRoZSBwb29sIHwKfCBgY2xhaW1fc3Rha2VyX3Jld2FyZChzdGFrZXIpYCB8IGFueW9uZSDigJQgdHJhbnNmZXJzIHRoZSBjYWxsZXIncyBjbGFpbWFibGUgcmV3YXJkIHRvIHRoZW0gfAoKV2hlbiBhIHNsYXNoIGZpcmVzLCB0aGUgY29uZmlndXJlZCB0cmVhc3VyeSBzaGFyZSBpcyBzZW50IHRvIHRoZSB0cmVhc3VyeQphZGRyZXNzIGltbWVkaWF0ZWx5LiBUaGUgcmVtYWluZGVyIGlzIGFkZGVkIHRvIHRoZSBzdGFrZXIgcmV3YXJkIHBvb2wgYW5kCmRpc3RyaWJ1dGVkIGFjcm9zcyB0aGUgc3Rha2VzIHRoYXQgd2VyZSBub3Qgc2xhc2hlZCwgYWNjb3JkaW5nIHRvIHRoZWlyIHNpemUuCkVhY2ggc3VjaCBzdGFrZXIgdGhlbiBjYWxscyBgY2xhaW1fc3Rha2VyX3Jld2FyZGAgdG8gd2l0aGRyYXcgdGhlaXIgc2hhcmUuCgpXaXRoIGEgdHJlYXN1cnkgc3BsaXQgb2YgMTAwMDAsIG5vIHJld2FyZCBwb29sIGlzIGZ1bmRlZCBhbmQgYmVoYXZpb3VyIG1hdGNoZXMKdGhlIHByZS1zcGxpdCBjb250cmFjdDogdGhlIGVudGlyZSBzbGFzaCBnb2VzIHRvIHRoZSB0cmVhc3VyeS4KCiMjIyMgV2h5IGEgY2xhaW0gcGF0aCBhbmQgbm90IGEgcHVzaAoKQSBwdXNoIHdvdWxkIGxvb3Agb3ZlciBldmVyeSBzdGFrZXIgb24gZXZlcnkgb3RoZXIgcmVnaXN0cmF0aW9uIGFuZCB0cmFuc2ZlciB0bwplYWNoIG9uZSBpbnNpZGUgdGhlIHNsYXNoIHRyYW5zYWN0aW9uLiBUaGF0IG1ha2VzIHRoZSBjb3N0IG9mIGEgc2xhc2ggc2NhbGUKd2l0aCB0aGUgbnVtYmVyIG9mIHN0YWtlcnMsIHdoaWNoIGlzIGJvdW5kbGVzcyBhbmQgZ3Jvd3Mgd2l0aCB0aGUgY29udHJhY3Qncwpvd24gc3VjY2Vzcy4gU29yb2JhbiB0cmFuc2FjdGlvbnMgaGF2ZSBhIGZpeGVkIGZlZSBidWRnZXQgYW5kIGEgbGVkZ2VyIGVudHJ5CmxpbWl0LCBzbyBhIHNsYXNoIHRoYXQgdG91Y2hlcyB0aG91c2FuZHMgb2Ygc3Rha2VycyB3b3VsZCBlaXRoZXIgZmFpbCBvdXQgb2YKcmVzb3VyY2VzIG9yIGJlY29tZSB0b28gZXhwZW5zaXZlIHRvIGV2ZXIgY2FsbC4gVGhlIHNsYXNoIHdvdWxkIGFsc28gYmUKZ2F0ZWQgb24gYSBzaW5nbGUgYWNjb3VudCBwYXlpbmcgZm9yIGV2ZXJ5b25lIGVsc2UncyB0cmFuc2Zlci4KCkEgY2xhaW0gcGF0aCBpbnN0ZWFkIG1ha2VzIHRoZSBzbGFzaCBjb3N0IE8oMSk6IGl0IGFkZHMgdG8gdGhlIHBvb2wgYW5kCnJlY29yZHMgdGhlIHBvb2wgYmFsYW5jZSwgcmVnYXJkbGVzcyBvZiBob3cgbWFueSBzdGFrZXJzIGFyZSBlbGlnaWJsZS4gRWFjaApzdGFrZXIgcGF5cyB0aGUgZmVlIGZvciB0aGVpciBvd24gY2xhaW0gd2hlbiB0aGV5IGNob29zZSB0byB3aXRoZHJhdywgYW5kIGEKc3Rha2VyIHdobyBuZXZlciBjbGFpbXMgbGVhdmVzIHRoZWlyIHNoYXJlIGluIHRoZSBwb29sIGZvciB0aGUgb3RoZXJzLgoKIyMjIFVwZ3JhZGVzCgpUaGUgcmVnaXN0cnkgaXMgdXBncmFkZWFibGUgaW4gcGxhY2UsIHNvIGEgZml4IG9yIGEgbmV3IGVudHJ5cG9pbnQgZG9lcyBub3QKb3JwaGFuIGV4aXN0aW5nIHJlZ2lzdHJhdGlvbnMgYXQgYSBuZXcgYWRkcmVzczoKCnwgTWV0aG9kIHwgV2hvIGNhbiBjYWxsIGl0IHwKfCAtLS0gfCAtLS0gfAp8IGBnZXRfdmVyc2lvbigpYCB8IGFueW9uZSDigJQgd2hpY2ggYnVpbGQgaXMgbGl2ZSBhdCB0aGlzIGFkZHJlc3MgfAp8IGBnZXRfYWRtaW4oKWAgfCBhbnlvbmUgfAp8IGB1cGdyYWRlKGFkbWluLCBuZXdfd2FzbV9oYXNoKWAgfCB0aGUgYWRtaW4gb25seSB8CgpgdXBncmFkZWAgc3dhcHMgdGhlIGNvbnRyYWN0J3MgY29kZSBhbmQga2VlcHMgaXRzIGFkZHJlc3MgYW5kIHN0b3JhZ2UsIHNvIGEgbmV3CnZlcnNpb24gbXVzdCBzdGF5IGNvbXBhdGlibGUgd2l0aCB0aGUgc3RvcmFnZSBzaGFwZXMgZG9jdW1lbnRlZCBvbiBgRGF0YUtleWAgYW5kCmBDb250cmFjdEVudHJ5YCBpbiBbcmVnaXN0cnkvc3JjL2xpYi5yc10oLi9yZWdpc3RyeS9zcmMvbGliLnJzKS4gU2VlCltERVBMT1kubWRdKC4vREVQTE9ZLm1kI3VwZ3JhZGluZy1hLWxpdmUtcmVnaXN0cnkpIGZvciB0aGUgbGl2ZSBydW5ib29rLgoKIyMjIEVycm9yIGNvZGVzCgpgUmVnaXN0cnlFcnJvcmAgY3Jvc3NlcyB0aGUgY29udHJhY3QgYm91bmRhcnkgYXMgYSBiYXJlIGB1MzJgLCBzbyB0aGUKbnVtZXJpYyBjb2RlIGlzIHRoZSBBUEkgYSBjYWxsZXIgYWN0dWFsbHkgc2Vlcy4gVGhlIHRhYmxlIGJlbG93IGlzIHRoZQpyZWZlcmVuY2UgZm9yIHRob3NlIGNvZGVzOyBpdCBpcyBrZXB0IG5leHQgdG8gdGhlIGVudW0gaW4KW3JlZ2lzdHJ5L3NyYy9saWIucnNdKC4vcmVnaXN0cnkvc3JjL2xpYi5ycykgc28gdGhlIHR3byBhcmUgdXBkYXRlZCB0b2dldGhlci4KCnwgQ29kZSB8IE5hbWUgfCBNZWFuaW5nIHwgVXN1YWwgcmVtZWR5IHwKfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfAp8IDEgfCBgQWxyZWFkeUluaXRpYWxpemVkYCB8IGBpbml0aWFsaXplYCB3YXMgY2FsbGVkIG9uIGEgcmVnaXN0cnkgdGhhdCBhbHJlYWR5IGhhcyBhbiBhZG1pbi4gfCBEbyBub3QgY2FsbCBgaW5pdGlhbGl6ZWAgYWdhaW47IHJlYWQgYGdldF9hZG1pbigpYCB0byBjb25maXJtIHRoZSBsaXZlIGFkbWluLCBhbmQgdXNlIGB1cGdyYWRlYCBmb3IgY29kZSBjaGFuZ2VzLiB8CnwgMiB8IGBOb3RJbml0aWFsaXplZGAgfCBBIG1ldGhvZCB0aGF0IG5lZWRzIGFuIGFkbWluIHJhbiBiZWZvcmUgYGluaXRpYWxpemVgLiB8IENhbGwgYGluaXRpYWxpemUoYWRtaW4pYCBvbmNlLCB0aGVuIHJldHJ5IHRoZSBvcmlnaW5hbCBjYWxsLiB8CnwgMyB8IGBVbmF1dGhvcml6ZWRgIHwgVGhlIGNhbGxlciBpcyBub3QgdGhlIGFkbWluIG9yIHRoZSByZWdpc3RlcmVkIG93bmVyIGZvciB0aGlzIGFjdGlvbi4gfCBSZS1zaWduIHRoZSB0cmFuc2FjdGlvbiB3aXRoIHRoZSBhZG1pbiBrZXkgb3IgdGhlIGVudHJ5J3MgY3VycmVudCBvd25lcjsgY2hlY2sgYGdldF9jb250cmFjdHNfYnlfb3duZXJgIGlmIHRoZSBvd25lciBpcyB1bmNsZWFyLiB8CnwgNCB8IGBDb250cmFjdE5vdEZvdW5kYCB8IE5vIHJlZ2lzdHJhdGlvbiBleGlzdHMgZm9yIHRoZSBnaXZlbiBgY29udHJhY3RfaWRgLiB8IFZlcmlmeSB0aGUgSUQgYWdhaW5zdCBgZ2V0X2FjdGl2ZV9jb250cmFjdHNgIC8gYGdldF9jb250cmFjdHNfYnlfb3duZXJgOyByZWdpc3RlciBpdCBmaXJzdCBpZiBpdCB3YXMgbmV2ZXIgbGlzdGVkLiB8CnwgNSB8IGBDb250cmFjdEFscmVhZHlSZWdpc3RlcmVkYCB8IFRoZSBgY29udHJhY3RfaWRgIGlzIGFscmVhZHkgaW4gdGhlIHJlZ2lzdHJ5LiB8IFVzZSBgdXBkYXRlX21ldGFkYXRhYCBvciBgc2V0X2NhdGVnb3JpZXNgIHRvIGNoYW5nZSB0aGUgZXhpc3RpbmcgZW50cnkgaW5zdGVhZCBvZiByZWdpc3RlcmluZyBhZ2Fpbi4gfAp8IDYgfCBgQ29udHJhY3ROb3RBY3RpdmVgIHwgVGhlIGVudHJ5IGV4aXN0cyBidXQgaXMgZGVhY3RpdmF0ZWQsIHNvIHRoZSBhY3Rpb24gcmVxdWlyZXMgYW4gYWN0aXZlIHJlZ2lzdHJhdGlvbi4gfCBSZWFjdGl2YXRlIGJ5IHJlLXJlZ2lzdGVyaW5nLCBvciBwaWNrIGEgZGlmZmVyZW50IGNvbnRyYWN0OyBgZ2V0X2FjdGl2ZV9jb250cmFjdHNgIGxpc3RzIG9ubHkgYWN0aXZlIGVudHJpZXMuIHwKfCA3IHwgYENvbnRyYWN0U3RpbGxBY3RpdmVgIHwgYGRlcmVnaXN0ZXJgIHdhcyBjYWxsZWQgb24gYW4gZW50cnkgdGhhdCBpcyBzdGlsbCBhY3RpdmUuIHwgQ2FsbCBgZGVhY3RpdmF0ZShjYWxsZXIsIGNvbnRyYWN0X2lkKWAgZmlyc3QsIHRoZW4gYGRlcmVnaXN0ZXJgLiB8CnwgOCB8IGBJbnZhbGlkTmFtZWAgfCBUaGUgc3VwcGxpZWQgbmFtZSBpcyBlbXB0eSBvciBleGNlZWRzIHRoZSBsZW5ndGggbGltaXQuIHwgUGFzcyBhIG5vbi1lbXB0eSBuYW1lIHdpdGhpbiB0aGUgZG9jdW1lbnRlZCBieXRlIGxpbWl0LiB8CnwgOSB8IGBJbnZhbGlkRGVzY3JpcHRpb25gIHwgVGhlIHN1cHBsaWVkIGRlc2NyaXB0aW9uIGV4Y2VlZHMgdGhlIGxlbmd0aCBsaW1pdC4gfCBTaG9ydGVuIHRoZSBkZXNjcmlwdGlvbiB0byBmaXQgdGhlIGxpbWl0LiB8CnwgMTAgfCBgSW52YWxpZENhdGVnb3J5YCB8IFRoZSBjYXRlZ29yeSBsaXN0IGlzIGVtcHR5IG9yIGNvbnRhaW5zIGFuIHVua25vd24gdmFyaWFudC4gfCBQYXNzIGF0IGxlYXN0IG9uZSBvZiB0aGUgZG9jdW1lbnRlZCBgQ2F0ZWdvcnlgIHZhbHVlcy4gfAp8IDExIHwgYEludmFsaWRTcGxpdGAgfCBUaGUgdHJlYXN1cnkgc2hhcmUgaXMgb3V0c2lkZSAw4oCTMTAwMDAgYmFzaXMgcG9pbnRzLiB8IFBhc3MgYSB2YWx1ZSBiZXR3ZWVuIDAgYW5kIDEwMDAwIGluY2x1c2l2ZS4gfAp8IDEyIHwgYEluc3VmZmljaWVudFN0YWtlYCB8IFRoZSBzdGFrZSBhbW91bnQgaXMgYmVsb3cgdGhlIG1pbmltdW0gb3IgdGhlIHN0YWtlciBoYXMgbm90aGluZyB0byB1bnN0YWtlLiB8IFN0YWtlIGF0IGxlYXN0IHRoZSBtaW5pbXVtIGFtb3VudCwgYW5kIG9ubHkgdW5zdGFrZSB3aGF0IHdhcyBzdGFrZWQuIHwKfCAxMyB8IGBOb3RoaW5nVG9DbGFpbWAgfCBgY2xhaW1fc3Rha2VyX3Jld2FyZGAgd2FzIGNhbGxlZCB3aXRoIG5vIGNsYWltYWJsZSBiYWxhbmNlLiB8IFdhaXQgdW50aWwgYSBzbGFzaCBmdW5kcyB0aGUgcG9vbCwgYW5kIGNoZWNrIGBnZXRfY2xhaW1hYmxlX3Jld2FyZChzdGFrZXIpYCBmaXJzdC4gfAo=
+# Lumina Contracts
+
+> Soroban smart contracts for Lumina, an open-source event indexer and GraphQL data layer for the Stellar network.
+
+Part of the Lumina project, split across three repos:
+
+- [lumina-frontend](https://github.com/Lumeeena/lumina-frontend) — Next.js explorer UI
+- [lumina-backend](https://github.com/Lumeeena/lumina-backend) — indexer + GraphQL API + PostgreSQL schema
+- [lumina-contracts](https://github.com/Lumeeena/lumina-contracts) — this repo
+
+## Where the registry fits
+
+Lumina indexes Soroban contract events, but an indexer has to know *which*
+contracts to watch. Without this contract, that list is a static
+`INDEXED_CONTRACT_IDS` env var that an operator edits by hand. The registry
+replaces the hand-edited list with an on-chain one. A project lists itself by
+calling `register_contract`, and every Lumina indexer pointed at the registry
+starts indexing that project's events on its next poll. No operator needs to
+act and no one needs to redeploy. Discovery is the reason the contract exists.
+Categories, staking and governance all exist to make that list worth trusting.
+
+```
+ project ──register_contract──▶ ┌──────────┐ ◀──get_active_contracts── indexer ──getEvents──▶ project's events
+                                │ registry │                              │
+ frontend ──read views─────────▶└──────────┘                              ▼
+    │                                │ emits contract_registered, …    PostgreSQL / GraphQL
+    └───────────── history view ◀────┴──────── indexed like any other contract's events
+```
+
+### How the indexer discovers contracts
+
+[lumina-backend](https://github.com/Lumeeena/lumina-backend)'s indexer
+(`indexer/src/registry.ts`) turns discovery on when `REGISTRY_CONTRACT_ID` and
+`REGISTRY_READ_ACCOUNT` are set. On a timer it then:
+
+1. Calls `get_active_contracts(offset, 50)` through `simulateTransaction`. This
+   is a read-only call, so the read account needs no key and pays no fee. It
+   keeps paging until a page comes back with fewer than 50 entries, with a
+   cap of 20 pages.
+2. Takes `contract_id` from each `ContractEntry`. It drops any address that is
+   not a `C…` contract address, because the registry accepts any `Address` and
+   one account address in the list would make the whole `getEvents` filter fail.
+3. Merges those IDs with the static list and indexes their events.
+
+Deactivating a registration therefore stops the indexer from polling that
+contract. Already-indexed events stay in the database.
+
+A note on paging semantics: `offset` is a position in *registration order*,
+counting deactivated entries, not a count of active ones. A page can come back
+with fewer than `limit` entries even when more active registrations follow,
+because the page skipped over deactivated entries. The same holds for
+`get_active_profiles` and `get_active_contracts_by_category`.
+
+### What the frontend reads
+
+[lumina-frontend](https://github.com/Lumeeena/lumina-frontend)'s `/registry`
+page (`lib/registry.ts`) reads the contract directly over Soroban RPC with the
+same simulate-only pattern. It uses `get_active_contracts`,
+`get_active_profiles`, `get_active_contracts_by_category`, `get_categories`,
+`get_contracts_by_owner`, `get_reputation` and `get_slashes`.
+
+The contract stores only current state. `ContractEntry.active` is a boolean,
+not a log, so "when was this deactivated, and by whom?" cannot be read from
+storage. The registration history view (`lib/registryHistory.ts`) rebuilds
+that history from the registry's **own events**. The indexer stores them
+because the registry is itself a registered contract, and the frontend queries
+them from the GraphQL API filtered to `contractId = <registry>`:
+
+| Event topic | Data tuple | History row |
+| --- | --- | --- |
+| `contract_registered` | `(contract_id, owner, name, categories)` | Registered |
+| `contract_deactivated` | `(contract_id, caller)`, or `(contract_id, "governance")` when deactivated by proposal | Deactivated |
+| `metadata_updated` | `(contract_id, owner, name)` | Metadata updated |
+| `ownership_transferred` | `(contract_id, previous_owner, new_owner)` | Ownership transferred |
+
+The history view matches on the **first topic** and treats the **first
+element of the data tuple** as the registration the event concerns. Other
+events (`categories_updated`, `stake_*`, `proposal_*`, `registry_upgraded`, …)
+still appear in the history, shown as a generic "Registry event" row.
+
+### What breaks downstream when the interface changes
+
+Neither sibling repo generates bindings from this contract. Both call methods by
+name, with arguments built by hand, and decode results as plain JS objects. A
+change here does not fail their builds. It fails at runtime, often quietly:
+
+| Change here | Effect downstream |
+| --- | --- |
+| Rename or remove `get_active_contracts`, or change its arguments | Indexer discovery fails every poll. Registered contracts stop being indexed, and the static list keeps working, which hides the failure. |
+| Rename a `ContractEntry` field (e.g. `contract_id`) | The indexer reads `undefined` IDs, filters them all out, and discovers nothing. The frontend renders blank rows. |
+| Change `offset`/`limit` semantics or the page cap | The indexer and the frontend stop paging too early or too late, so contracts are silently missed or duplicated. |
+| Change the arguments of `register_contract` | Every registrant's scripts and bindings break. This happened when `categories` was added. |
+| Rename an event topic, or move `contract_id` out of the first data slot | History rows turn into "Registry event" rows or lose their subject, so the per-contract history is empty. |
+| Add or reorder `Category` variants | The frontend's `CATEGORIES` list no longer matches, and category filters drop unknown values. |
+
+`registry/tests/interface.rs` guards the function and type half of this list.
+See [Interface snapshot](#interface-snapshot). Event topics and payloads are
+not part of the contract spec, so review changes to `env.events().publish`
+calls against the table above.
+
+## Lumina Registry
+
+`registry/` — an on-chain manifest of Soroban contracts registered for Lumina indexing. Any project can call `register_contract()` to add their contract; [lumina-backend](https://github.com/Lumeeena/lumina-backend)'s indexer can then discover and index their events.
+
+```rust
+registry.register_contract(owner, contract_id, "My Protocol", "A DeFi protocol on Stellar", vec![Category::DeFi])
+```
+
+`get_active_contracts(offset, limit)` returns a paginated list of active registrations for discovery.
+
+### Categories
+
+Every registration declares at least one category, so the Registry supports
+browsing rather than only a flat list:
+
+`DeFi` · `Nft` · `Gaming` · `Identity` · `Infrastructure` · `Payments` ·
+`Oracle` · `Dao` · `Other`
+
+| Method | Who can call it |
+| --- | --- |
+| `get_active_contracts_by_category(category, offset, limit)` | anyone — same paging semantics as `get_active_contracts` |
+| `get_categories(contract_id)` | anyone |
+| `set_categories(owner, contract_id, categories)` | the registered owner only |
+| `prune_category(category)` | anyone — removes dead index references, returns the count removed |
+| `prune_all_contracts()` | anyone — same, for the global `AllContracts` index |
+
+A contract can be filed under several categories and is discoverable under each.
+Duplicates are collapsed, so passing a category twice indexes it once.
+
+The vocabulary is a fixed enum rather than free-form tags because the point is
+browsing, and free-form tags fragment it immediately — `DeFi`, `defi` and `De-Fi`
+become three categories each holding part of the answer. Adding a category is a
+contract upgrade; `Other` is the escape hatch until then.
+
+`deactivate` does not rewrite category indices. `get_active_contracts_by_category`
+filters on `active`, exactly as the global listing does, which is what keeps a
+deactivated registration out of browsing.
+
+`deregister` is the opposite: it deletes the entry itself (owner only, must
+already be deactivated and fully unstaked) and eagerly removes it from the
+global, owner, and every category index, so a deregistered contract leaves no
+index reference. Slash records are kept for auditability. Storage archival can
+still strand a reference the eager paths never saw — `prune_category` /
+`prune_all_contracts` cover that case. They are permissionless and idempotent
+(safe to call repeatedly; a second call removes nothing and returns 0), so an
+indexer or a cron-like caller can pay for the cleanup on a schedule.
+
+Registrations are also manageable after the fact:
+
+| Method | Who can call it |
+| --- | --- |
+| `get_contracts_by_owner(owner, offset, limit)` | anyone — paginated, includes the owner's deactivated entries |
+| `update_metadata(owner, contract_id, name, description)` | the registered owner only |
+| `transfer_ownership(caller, contract_id, new_owner)` | the current owner or the admin |
+| `deactivate(caller, contract_id)` | the current owner or the admin |
+| `deregister(owner, contract_id)` | the registered owner only — entry must be deactivated and unstaked |
+
+Counters: `get_contract_count` is the live total (deactivated included,
+deregistered excluded), `get_total_registered` is the lifetime total
+(never decremented), and `get_active_contract_count` is the currently listed
+figure. The frontend stats page should read `get_active_contract_count`.
+
+### Upgrades
+
+The registry is upgradeable in place, so a fix or a new entrypoint does not
+orphan existing registrations at a new address:
+
+| Method | Who can call it |
+| --- | --- |
+| `get_version()` | anyone — which build is live at this address |
+| `get_admin()` | anyone |
+| `upgrade(admin, new_wasm_hash)` | the admin only |
+
+`upgrade` swaps the contract's code and keeps its address and storage, so a new
+version must stay compatible with the storage shapes documented on `DataKey` and
+`ContractEntry` in [registry/src/lib.rs](./registry/src/lib.rs). See
+[DEPLOY.md](./DEPLOY.md#upgrading-a-live-registry) for the live runbook.
+
+### Slashing and staker rewards
+
+A slash does not send the whole stake to the treasury. `slash` splits the
+slashed amount by a governance-set proportion: one part goes to the treasury
+address, the rest is credited to a staker reward pool. The split is configured
+with `set_slash_split(admin, treasury_bps)`, where `treasury_bps` is the
+treasury's share in basis points (0–10000). The remainder, `10000 -
+treasury_bps`, is the stakers' share. `get_slash_split()` returns the current
+value. With `treasury_bps = 10000` the behaviour matches the old contract
+exactly: the treasury receives the full slashed amount and the reward pool
+stays empty.
+
+Distribution is a **claim**, not a push. A slash credits the reward pool and
+records the slashed amount; it does not iterate over stakers. A push would have
+to loop over every honest staker on every slash, so the cost of a slash would
+scale with the number of stakers — an attacker could make slashing unaffordable
+by staking from many addresses, and a slash against a popular registration
+could exceed the transaction's resource limits. A claim inverts that: the slash
+is O(1), and each staker pays the cost of their own withdrawal when they choose
+to collect.
+
+| Method | Who can call it |
+| --- | --- |
+| `set_slash_split(admin, treasury_bps)` | the admin only — `treasury_bps` must be ≤ 10000 |
+| `get_slash_split()` | anyone — the current treasury share in basis points |
+| `claim_staker_reward(staker)` | a staker with an unclaimed share |
+| `get_claimable_reward(staker)` | anyone — the staker's unclaimed share |
+
+A staker's share is proportional to their stake on registrations other than
+the slashed one, so staking becomes a judgement about which registrations are
+honest rather than a lottery. Claiming transfers the staker's share and zeroes
+it; a second claim returns nothing. The reward pool is funded only by slashes,
+so a registry with no slashes has nothing to claim.
+
+### Error codes
+
+`RegistryError` crosses the contract boundary as a bare `u32`, so the
+numeric code is the API a caller actually sees. The table below is the
+reference for those codes; it is kept next to the enum in
+[registry/src/lib.rs](./registry/src/lib.rs) so the two are updated together.
+
+| Code | Name | Meaning | Usual remedy |
+| --- | --- | --- | --- |
+| 1 | `AlreadyInitialized` | `initialize` was called on a registry that already has an admin. | Do not call `initialize` again; read `get_admin()` to confirm the live admin, and use `upgrade` for code changes. |
+| 2 | `NotInitialized` | A method that needs an admin ran before `initialize`. | Call `initialize(admin)` once, then retry the original call. |
+| 3 | `Unauthorized` | The caller is not the admin or the registered owner for this action. | Re-sign the transaction with the admin key or the entry's current owner; check `get_contracts_by_owner` if the owner is unclear. |
+| 4 | `ContractNotFound` | No registration exists for the given `contract_id`. | Verify the ID against `get_active_contracts` / `get_contracts_by_owner`; register it first if it was never listed. |
+| 5 | `ContractAlreadyRegistered` | The `contract_id` is already in the registry. | Use `update_metadata` or `set_categories` to change the existing entry instead of registering again. |
+| 6 | `ContractNotActive` | The entry exists but is deactivated, so the action requires an active registration. | Reactivate by re-registering, or pick a different contract; `get_active_contracts` lists only active entries. |
+| 7 | `ContractStillActive` | `deregister` was called on an entry that is still active. | Call `deactivate(caller, contract_id)` first, then `deregister`. |
+| 8 | `InvalidName` | The supplied name is empty or exceeds the length limit. | Pass a non-empty name within the documented byte limit. |
+| 9 | `InvalidDescription` | The supplied description exceeds the length limit. | Shorten the description to fit the limit. |
+| 10 | `InvalidCategory` | The category list is empty or contains a value outside the `Category` enum. | Pass at least one valid `Category` variant; see the Categories section for the current vocabulary. |
+| 11 | `TooManyCategories` | More categories were supplied than the entry allows. | Trim the list to the maximum number of categories per registration. |
+| 12 | `StakeNotFound` | `withdraw_stake` was called for an entry with no stake. | Stake first with `stake(owner, contract_id, amount)`, or skip the withdrawal. |
+| 13 | `InsufficientStake` | The requested slash or withdrawal exceeds the staked amount. | Lower the amount to at most `get_stake(contract_id)`, or have the owner top up the stake. |
+| 14 | `StakeLocked` | The stake is still locked, so it cannot be withdrawn yet. | Wait until the lock expiry reported by `get_reputation(contract_id)` has passed, then retry. |
+| 15 | `NotVerified` | The action requires a verified registration, but the entry is not verified. | Have an admin run `propose_set_verified(proposer, contract_id, true)` and wait out the timelock. |
+| 16 | `AlreadyVerified` | `propose_set_verified` was called with the value the entry already has. | Skip the proposal; read `is_verified(contract_id)` before proposing. |
+| 17 | `ProposalNotFound` | No governance proposal exists for the given ID. | List proposals and retry with a valid ID; the proposal may have already been executed or cancelled. |
+| 18 | `ProposalNotReady` | The proposal exists but its timelock has not elapsed. | Wait until the proposal's execution ledger, then call `execute_proposal` again. |
+| 19 | `ProposalAlreadyExecuted` | The proposal was already executed or cancelled. | Do not re-execute; read the proposal's final state to confirm the outcome. |
+| 20 | `RegistrationLimitReached` | The per-owner registration limit is enabled and this owner has hit it. | Deregister an unused entry, or have an admin raise the limit via `propose_configure_registration_rate_limit`. |
+
+### Staking & reputation
+
+Registration stays free and permissionless by default — anyone can list a
+contract for indexing. Governance can optionally enable an allowlist or a
+per-owner registration limit for curated deployments. On top of that, a
+registrant can post collateral, and governance can attest or penalise, so
+consumers of the Registry can tell a well-run project apart from a name that
+was typed into a form:
+
+| Method | Who can call it |
+| --- | --- |
+| `stake(owner, contract_id, amount)` | the registered owner — additive, tops up an existing stake |
+| `withdraw_stake(owner, contract_id)` | the registered owner, in good standing (see below) |
+| `propose_set_verified(proposer, contract_id, verified)` | an admin — takes effect only after approval + timelock |
+| `propose_slash(proposer, contract_id, amount, reason)` | an admin — same |
+| `propose_configure_staking(proposer, token, treasury)` | an admin — same |
+| `propose_set_allowlist_enabled(proposer, enabled)` | an admin — same |
+| `propose_set_allowlisted(proposer, owner, allowed)` | an admin — same |
+| `propose_set_rate_limit(proposer, limit, window_ledgers)` | an admin — same; zero limit disables it |
+| `get_reputation(contract_id)` | anyone — stake, verified, lifetime slashed, lock expiry |
+| `get_contract_profile(contract_id)` | anyone — the entry and its reputation in one call |
+| `get_active_profiles(offset, limit)` | anyone — `get_active_contracts` with reputation attached |
+| `get_stake` / `is_verified` / `get_slashes` / `get_staking_config` | anyone |
+
+Verified status has no non-governance path: a registrant cannot verify their own
+contract, which is the entire value of the signal. (Permissionless third-party
+`attest` exists and is documented below, but it records a separate, weaker claim
+and cannot reach `Verified`.) Slashes move stake to the
+treasury and record their reason on-chain permanently, so a penalty stays
+auditable long after the stake it was taken from is gone.
+
+**Good standing**, the condition for `withdraw_stake`, is three things: you are
+the registered owner, the registration is deactivated (you get collateral back
+by leaving, not while still listed), and no slash has landed within the last
+`SLASH_LOCK_LEDGERS` (~24 h). The lock is what stops an owner emptying the stake
+the moment a first slash reveals they are being watched.
+
+Staking is closed until governance runs `propose_configure_staking` to name a
+SEP-41 token (native XLM via its Stellar Asset Contract works) and a treasury.
+Routing that through governance rather than `initialize` means the already-live
+registry can adopt staking after an upgrade instead of being redeployed.
+
+### Third-party attestations
+
+Any address can vouch for a registration with a short, bounded label. This is a
+transparency feature rather than a trust signal:
+
+| Method | Who can call it |
+| --- | --- |
+| `attest(attester, contract_id, label)` | anyone, including the registration's own owner |
+| `revoke_attestation(attester, contract_id)` | the attester, and only for their own attestation |
+| `get_attestations(contract_id)` | anyone — `(attester, label, created_at)`, oldest first |
+
+Two properties are deliberate. The attester's address is recorded on-chain, so a
+claim is attributable rather than anonymous, and the attester can withdraw it
+themselves without asking anyone. And `revoke_attestation` is scoped to the
+caller's own record: no admin, and not even the registration's owner, can remove
+another party's attestation, because a claim should last exactly as long as the
+party making it stands behind it.
+
+Attestations are **not** verification and never feed into it. `Verified` remains
+governance-only, set through a threshold-and-timelocked proposal, and there is no
+counter or path by which attaching many attestations could substitute for that —
+so nobody can inflate the verified signal by attaching cheap labels. Consumers
+that want to weight the two differently can, and can surface the attester either
+way.
+
+One attestation per attester per registration: re-attesting revises the existing
+label instead of appending, so a stale claim cannot be left behind. Labels are
+bounded to 64 bytes and non-empty, and a registration holds at most 20
+attestations, so the cost of reading a registration's attestations is a property
+of the contract rather than of how many parties choose to speak up.
+
+## Build & Test
+
+Install GNU Make, the Rust stable toolchain, and the Soroban wasm target:
+
+```bash
+rustup target add wasm32v1-none
+rustup component add rustfmt clippy
+```
+
+Run the same full check used by CI, or run individual targets:
+
+```bash
+make check
+make build
+make test
+make fmt
+make clippy
+```
+
+`make test` builds the release wasm for the workspace before running tests. The
+upgrade tests deploy the registry from its compiled wasm — the only form a
+Soroban upgrade can be performed on — and upgrade it to `registry-v2/`, a
+deliberately minimal second version that exists only as that test's upgrade
+target and is never deployed. `make check` runs formatting and clippy checks
+before the build-and-test sequence.
+
+Use `wasm32v1-none`, not `wasm32-unknown-unknown`; on current Rust the latter
+emits the reference-types proposal, which the Soroban host refuses to load.
+
+### Upgrading the Rust Toolchain
+
+The project pins its Rust compiler version using a `rust-toolchain.toml` file to ensure that CI and local builds compile with the exact same compiler. A floating toolchain can cause unexpected breakages (such as the reference-types proposal being emitted by newer Rust versions on `wasm32-unknown-unknown`).
+
+To upgrade the compiler version:
+1. Update the `channel` value in `rust-toolchain.toml` to the new stable version.
+2. Ensure `targets = ["wasm32v1-none"]` remains present in the file.
+3. Re-run `cargo build --target wasm32v1-none --release` and `cargo test` locally to verify the new compiler version doesn't introduce any new build errors or warnings.
+4. Commit the updated `rust-toolchain.toml` file and open a PR. CI will automatically honor the newly pinned version instead of defaulting to `stable`.
+
+### Interface snapshot
+
+[registry/interface.snap](./registry/interface.snap) is the registry's exported
+interface as read from the built wasm's contract spec: every function signature,
+struct, union, enum and error code, one per line and without doc comments.
+`make test` compares the current build against it, so CI fails on any change
+nobody reviewed, and the failure message lists the lines that changed.
+
+To accept an intended change, run one line after the wasm build and commit the
+updated snapshot along with the change:
+
+```bash
+make build
+UPDATE_INTERFACE_SNAPSHOT=1 cargo test --test interface
+```
+
+The snapshot diff in the PR is the review. A line that is only added is usually
+safe. A line that changes or disappears breaks the consumers described in
+[What breaks downstream](#what-breaks-downstream-when-the-interface-changes).
+
+### Upgrade fixture
+
+`registry-v2/` is a hand-maintained copy of the registry's storage types, kept
+byte-compatible so the upgrade tests prove that independently written v2 types
+decode v1 storage. `cargo test` compares its type definitions field-for-field
+against `registry/src/lib.rs` and fails CI when they diverge.
+
+## Deploying
+
+Deployed on **testnet** at:
+
+```
+CAYUDQPV3RKPM3EXDFGI3457FV677JLUCJ4OLKWGCUBPRIHYKXK3WFAZ
+```
+
+When a storage type changes, update `registry-v2/` in the same PR so the fixture
+keeps mirroring the real types, then re-run `cargo test`. If you changed
+`ContractEntry` without updating the fixture, CI fails and the message names the
+divergent fields and points back here.
+
+## Dependencies & Supply Chain Review
+
+This repository maintains a minimal dependency surface to minimize attack vectors, ensure strict `no_std` compliance, and keep compiled WebAssembly contract sizes small.
+
+### Direct Dependencies
+
+- **`soroban-sdk` (v22.0.0, workspace)**:
+  - **Why needed**: Core Soroban framework providing smart contract host abstractions, env bindings (`Env`, `Address`, `Vec`, `String`, `BytesN`, `Symbol`), token client bindings (`soroban_sdk::token::Client`), contract macros (`#[contract]`, `#[contractimpl]`, `#[contracttype]`, `#[contracterror]`), and storage access APIs.
+  - **Features**: Enabled with `alloc` feature for linear memory allocations in `no_std` WebAssembly runtime.
+- **`soroban-sdk` with `testutils` (dev-dependencies)**:
+  - **Why needed**: In-memory test environment, mock authorizations (`mock_all_auths`, `MockAuth`), and contract client test generation.
+
+### Supply Chain & `no_std` Guarantees
+
+- **`no_std` Contract Execution**: Smart contracts in this workspace are strictly `#![no_std]`. They do not link the standard library or depend on OS-level system calls.
+- **Pinned `ed25519-dalek`**: `ed25519-dalek` is pinned (v2.2.0) via `soroban-env-host` for cryptographic Ed25519 signature checks in off-chain host and test simulation environments (`testutils`). It is an off-chain/host dependency and is **never** linked into the deployed wasm bytecode on-chain (where cryptographic operations are provided natively by Soroban host functions).
+- **Automated Security Audits**: CI runs `cargo audit` against the RustSec Advisory Database on every pull request and push to main to detect known vulnerabilities.
+
+## License
+
+MIT
+

@@ -148,6 +148,15 @@ pub trait RegistryInterface {
     /// not opened staking yet.
     fn get_staking_config(env: Env) -> Result<(Address, Address), RegistryError>;
 
+    /// The governance-set split of a slash between the treasury and the
+    /// staker reward pool, in basis points (0–10000). A value of 10000 means
+    /// the whole slash goes to the treasury, matching pre-split behaviour.
+    fn get_slash_treasury_bps(env: Env) -> u32;
+
+    /// The share of a slash owed to `staker` from the reward pool, claimable
+    /// via `claim_slash_reward`. Zero if the staker has nothing to claim.
+    fn get_claimable_slash_reward(env: Env, staker: Address) -> i128;
+
     /// The per-registration fee. Zero means registration is free.
     fn get_registration_fee(env: Env) -> i128;
 
@@ -228,6 +237,10 @@ pub trait RegistryInterface {
 
     /// Every contract registered by `owner`, **including** deactivated ones.
     fn get_contracts_by_owner(env: Env, owner: Address, offset: u32, limit: u32) -> Vec<ContractEntry>;
+
+    /// Claim the caller's accumulated share of past slashes from the staker
+    /// reward pool. Errors with `NothingToClaim` if the balance is zero.
+    fn claim_slash_reward(env: Env, staker: Address) -> Result<i128, RegistryError>;
 }
 
 /// Errors the registry's read-only surface can return.
@@ -295,6 +308,8 @@ pub enum RegistryError {
     InsufficientFee = 25,
     /// Tag count or length exceeds bounds.
     InvalidTags = 26,
+    /// The caller has no slash reward to claim.
+    NothingToClaim = 27,
 }
 
 /// Byte-compatible with `lumina_registry::ContractEntry`.
@@ -466,4 +481,7 @@ pub enum ProposalAction {
     ConfigureRegistrationRateLimit(u32, u32),
     /// Set the registration fee in the stake token; zero disables it.
     SetRegistrationFee(i128),
+    /// Set the slash split between treasury and staker reward pool, in basis
+    /// points: `(treasury_bps, reward_pool_bps)`. Must sum to 10000.
+    ConfigureSlashSplit(u32, u32),
 }

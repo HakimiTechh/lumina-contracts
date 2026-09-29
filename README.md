@@ -221,7 +221,7 @@ was typed into a form:
 | `withdraw_stake(owner, contract_id)` | the registered owner, in good standing (see below) |
 | `propose_set_verified(proposer, contract_id, verified)` | an admin — takes effect only after approval + timelock |
 | `propose_slash(proposer, contract_id, amount, reason)` | an admin — same |
-| `propose_configure_staking(proposer, token, treasury)` | an admin — same |
+| `propose_configure_staking(proposer, token, treasury, treasury_bps)` | an admin — same |
 | `propose_set_allowlist_enabled(proposer, enabled)` | an admin — same |
 | `propose_set_allowlisted(proposer, owner, allowed)` | an admin — same |
 | `propose_set_rate_limit(proposer, limit, window_ledgers)` | an admin — same; zero limit disables it |
@@ -234,7 +234,8 @@ Verified status has no non-governance path: a registrant cannot verify their own
 contract, which is the entire value of the signal. (Permissionless third-party
 `attest` exists and is documented below, but it records a separate, weaker claim
 and cannot reach `Verified`.) Slashes move stake to the
-treasury and record their reason on-chain permanently, so a penalty stays
+treasury and to a staker reward pool, split by a governance-set proportion, and
+record their reason on-chain permanently, so a penalty stays
 auditable long after the stake it was taken from is gone.
 
 **Good standing**, the condition for `withdraw_stake`, is three things: you are
@@ -244,7 +245,8 @@ by leaving, not while still listed), and no slash has landed within the last
 the moment a first slash reveals they are being watched.
 
 Staking is closed until governance runs `propose_configure_staking` to name a
-SEP-41 token (native XLM via its Stellar Asset Contract works) and a treasury.
+SEP-41 token (native XLM via its Stellar Asset Contract works), a treasury, and
+the treasury's share of each slash in basis points.
 Routing that through governance rather than `initialize` means the already-live
 registry can adopt staking after an upgrade instead of being redeployed.
 
@@ -252,6 +254,38 @@ registry can adopt staking after an upgrade instead of being redeployed.
 
 Any address can vouch for a registration with a short, bounded label. This is a
 transparency feature rather than a trust signal:
+
+### Slash distribution
+
+A slash does not pay out to stakers directly. It credits a reward pool, and
+each staker claims their share with `claim_staker_reward(staker, contract_id)`.
+The split is set by governance through `propose_configure_staking` as
+`treasury_bps`, in basis points of the slashed amount; the remainder accrues to
+the reward pool. With `treasury_bps = 10000` the whole slash goes to the
+treasury and behaviour matches the pre-split contract exactly.
+
+The reward pool is not a per-slash pot. It is a single accumulator over the
+registry's total stake: each slash adds to it, and a staker's claimable amount
+is their stake's share of the total stake at the time they claim, minus what
+they have already claimed. A staker on a registration that was never slashed
+still earns from slashes against other registrations, which is the point —
+staking is a judgement on the registry, not a bet on one entry.
+
+Distribution is a **claim**, not a push. A push would have to iterate every
+staker on every slash, so the cost of a slash would scale with the number of
+stakers in the registry. That is unbounded work in a single transaction: it
+would exceed the ledger's instruction budget once the registry is large enough
+to matter, and it would make a slash fail exactly when the registry is
+successful. Worse, a staker whose entry cannot be reached would block the
+slash for everyone. A claim moves that cost to the party who wants the money,
+one staker per transaction, and a staker who never claims simply leaves their
+share in the pool.
+
+| Method | Who can call it |
+| --- | --- |
+| `claim_staker_reward(staker, contract_id)` | a staker with a positive claimable balance |
+| `get_claimable_reward(staker, contract_id)` | anyone — the staker's unclaimed share |
+| `get_staking_config()` | anyone — includes `treasury_bps` and the pool balance |
 
 | Method | Who can call it |
 | --- | --- |
